@@ -7,7 +7,7 @@ export function customFetch (url, properties) {
             url: url,
             headers: {
                 ...properties?.headers, // if properties have something and is passed, is going to see if they are headers inside
-                "Authorization": `Bearer ${token}` // this line can be passed in public fetchs and nothing happens, is for authentication
+                "Authorization": `Bearer ${JSON.parse(token)}` // this line can be passed in public fetchs and nothing happens, is for authentication
             }
         }    
        return axios(config) 

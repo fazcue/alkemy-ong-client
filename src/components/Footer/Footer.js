@@ -125,7 +125,8 @@ const Footer = () => {
                 <WebLinks />
             </div>
             <div className={styles.contact}>
-                <Link to='/contacto'>Contáctanos</Link>
+                <p><Link to='/contacto'>Contáctanos</Link></p>
+                <p className={styles.siteName}>ONG SOMOS MÁS</p>
             </div>
         </>
     )

@@ -15,6 +15,7 @@ import SlidesPanel from './partials/SlidesPanel'
 import UsersPanel from './partials/UsersPanel'
 import OrganizationPanel from './partials/OrganizationPanel'
 import MembersPanel from './partials/MembersPanel'
+import ContactsPanel from './partials/ContactsPanel'
 
 import './BackOffice.css'
 
@@ -50,6 +51,7 @@ const BackOffice = () => {
                     <Route path="/users" element={<UsersPanel />} />
                     <Route path="/organization" element={<OrganizationPanel />} />
                     <Route path="/members" element={<MembersPanel />} />
+                    <Route path="/contacts" element={<ContactsPanel />} />
                 </Route>
 
             </Routes>

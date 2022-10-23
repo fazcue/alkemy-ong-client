@@ -80,29 +80,23 @@
 
 .contact-container {
     display:flex;
+    flex-direction: column;
+    /* justify-content: space-between; */
+    align-items: center;
     margin: 10px;
-    border-bottom: 1px solid lightgrey
+    padding: 12px;
+    border: 1px solid lightgrey
 }
 
 .contact-phone,
-.contact-name {
-    display:block;
-    text-align: left;
-    width: 15%;
+.contact-name,
+.contact-email,
+.contact-message {
+    /* display:block;
+    text-align: left; */
+    /* width: 15%; */
+    margin: 0;
 }
-
-.contact-email {
-    display:block;
-    width: 27%;
-    text-align: left;
-}
-
-.contact-message{
-    display:block;
-    width: 43%;
-    text-align: left
-}
-
 
 .panelTitle{
     padding: 30px 0 0 50px;

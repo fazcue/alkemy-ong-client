@@ -2,7 +2,7 @@ import React from "react"
 import {useSelector} from 'react-redux'
 import {Link, useLocation, useNavigate } from 'react-router-dom';
 
-import { PersonLinesFill, Newspaper, JournalText, BookmarkStar, ChatLeftHeart, Easel2, PersonCircle, Building, People } from 'react-bootstrap-icons';
+import { PersonLinesFill, Newspaper, JournalText, BookmarkStar, ChatLeftHeart, Easel2, PersonCircle, Building, People, Envelope } from 'react-bootstrap-icons';
 import { useDispatch } from 'react-redux'
 import { logout } from '../../../reducers/userReducer'
 
@@ -22,6 +22,8 @@ const Sidebar = ()=> {
         dispatch(logout())        
         navigate('/')
     }
+
+
 
     return (
 
@@ -74,6 +76,11 @@ const Sidebar = ()=> {
                 <li className={`sidebarItem ${userState.roleId === 1 ? '' : 'd-none'}`}>
                     <Link to="members" className={`sidebarButton user-select-none ${location.pathname === '/backOffice/members' ? 'sidebarButtonSelected' : ''}`}>
                         <People className="sidebarIcon"/><span className="sidebarText">Miembros</span>
+                    </Link>
+                </li>  
+                <li className={`sidebarItem ${userState.roleId === 1 ? '' : 'd-none'}`}>
+                    <Link to="contacts" className={`sidebarButton user-select-none ${location.pathname === '/backOffice/contacts' ? 'sidebarButtonSelected' : ''}`}>
+                        <Envelope className="sidebarIcon"/><span className="sidebarText">Contactos</span>
                     </Link>
                 </li>      
 
