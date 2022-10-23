@@ -1,0 +1,116 @@
+.formCont{
+    margin: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+}
+
+.divCenter{
+    margin: 0 auto;
+
+}
+
+.input {
+    margin-top: 3%;
+    width: 100%;
+    background: var(--secondary-color);
+    border: none;
+    box-shadow: 0px 4px 4px rgb(0 0 0 / 25%);
+    border-radius: 4px;
+    height: 30px;
+}
+
+.textarea {
+    min-height: 100px;
+    margin-top: 3%;
+    width: 100%;
+    background: var(--secondary-color);
+    border: none;
+    box-shadow: 0px 4px 4px rgb(0 0 0 / 25%);
+    border-radius: 4px;
+    height: 25px;
+}
+
+.btnAzul{
+    background: var(--secondary-color);
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 4px;
+    border: 0.698095px solid var(--circle-color);
+    margin-top: 10px;
+    color: var(--primary-color);
+    padding: 8px;
+    transition: all 0.2s ease-in-out;
+}
+
+.btnAzul:hover {
+    background: var(--triangle-color);
+    border: 0.698095px solid var(--triangle-color);
+    color: var(--secondary-color);
+}
+
+.requerido{
+color: var(--triangle-color);
+font-family: Arial, Helvetica, sans-serif;
+}
+
+.text{
+    color: #FF0000;
+}
+
+.members-image {
+    width: 200px;
+    height: 200px;
+    margin: 0 auto;
+}
+
+.members-image img {
+    width: 100%;
+    height: 100%;
+}
+
+.members-card {
+    width: 250px;
+    height: 250px;
+    margin: 0 auto;
+    text-align: center;
+    padding: 5px;
+    border: 1px solid lightgrey;
+    border-radius:10px;
+    background-color: lightgrey;
+    margin-bottom: 10px;
+}
+
+.members-grid  {
+    display:grid;
+    width: 70%;
+    margin: 0 auto;
+    grid-template-columns: 50% 50%;
+    justify-items: center;
+
+}
+
+.other-members-grid {
+    display:grid;
+    grid-template-columns: 33% 33% 33%;
+    justify-items: center;
+ 
+}
+
+@media (max-width: 768px) {
+    .members-container,
+    .members-grid,
+    .other-members-grid {
+        display: block;
+        grid-template-columns:0
+    }
+}
+
+.member-text-container {
+    width: 50%;
+}
+
+.containerForm{
+    background-color: var(--light-color);
+    border-radius: 4px;
+}

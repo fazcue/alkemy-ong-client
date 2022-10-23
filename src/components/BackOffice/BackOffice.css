@@ -1,0 +1,124 @@
+.sidebarContainer{
+    width: 250px;
+    padding: 20px;
+    background-color: ghostwhite;
+}
+.sidebarLogo{
+    width:100px
+}
+
+.sidebarItem{
+    margin: 5px 0;
+    text-align: left;
+}
+
+.sidebarButton{
+    all:unset;
+    display: block;
+    box-sizing: border-box;
+    padding: 10px 15px;
+    text-decoration: none;
+    color: gray;
+    width:100%;
+    border-radius:5px;
+}
+
+.sidebarButton:hover{
+    background-color: rgb(215, 234, 241);
+    color: darkslategray;
+
+}
+
+.sidebarButton:active{
+    background-color: lightblue;
+    color: darkslategray;
+
+}
+
+.sidebarButtonSelected{
+    background-color: rgb(80, 126, 141);
+    color: white;
+}
+
+.sidebarButtonSelected:hover{
+    background-color: rgb(80, 126, 141);
+    color: white;
+}
+
+.sidebarButtonSelected:active{
+    background-color: rgb(80, 126, 141);
+    color: white;
+}
+
+
+.sidebarIcon{
+    margin-bottom: 3px;
+    margin-right: 10px;
+}
+
+/* .sidebarText{
+
+} */
+
+
+.sidebarLogoutButton{
+    all:unset;
+    box-sizing: border-box;
+    padding: 10px 15px;
+    margin-bottom: 1rem;
+    text-decoration: none;
+    color: darkslategray;
+    border: 1px solid darkslategray;
+    width:100%;
+    border-radius:5px;
+}
+
+.sidebarLogoutButton:hover{
+    background-color: darkslategray;
+    color:white
+}
+
+.contact-container {
+    display:flex;
+    margin: 10px;
+    border-bottom: 1px solid lightgrey
+}
+
+.contact-phone,
+.contact-name {
+    display:block;
+    text-align: left;
+    width: 15%;
+}
+
+.contact-email {
+    display:block;
+    width: 27%;
+    text-align: left;
+}
+
+.contact-message{
+    display:block;
+    width: 43%;
+    text-align: left
+}
+
+
+.panelTitle{
+    padding: 30px 0 0 50px;
+}
+
+
+.checkInput {
+    clear: left;
+}
+  
+.form-switch.form-switch-sm {
+    margin-bottom: 0.5rem; /* JUST FOR STYLING PURPOSE */
+}
+  
+.form-switch.form-switch-sm .checkInput {
+    height: 1rem;
+    width: calc(1rem + 0.75rem);
+    border-radius: 2rem;
+}

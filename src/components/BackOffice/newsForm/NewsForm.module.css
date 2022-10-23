@@ -1,0 +1,50 @@
+.newsForm {
+  display: flex;
+  flex-direction: column;
+  min-width: 200px;
+  background-color:lightblue;
+  padding: 12px;
+  border-radius: 5px;
+  margin: 12px;
+}
+
+.newsForm input {
+  padding: 8px;
+  margin: 1px 0;
+  font-size: 14px;
+  border: 0;
+}
+
+.button {
+  border: 0;
+  cursor: pointer;
+}
+
+.button:hover {
+  background-color: crimson;
+  color: white;
+}
+
+.button:active {
+  background-color: dimgray;
+}
+
+.error {
+  font-size: 12px;
+  margin-bottom: 4px;
+  color: crimson;
+}
+
+.ckEditor {
+  font-size: 14px;
+}
+
+.uploadImage {
+  padding: 8px;
+  background-color: white;
+  cursor: pointer;
+}
+
+input[type=file] {
+  display: none;
+}

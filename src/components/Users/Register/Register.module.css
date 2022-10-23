@@ -1,0 +1,49 @@
+.registerForm {
+    display: flex;
+    flex-direction: column;
+    max-width: 400px;
+    background-color:lightblue;
+    padding: 12px;
+    border-radius: 5px;
+    margin: 12px;
+}
+
+.registerForm input {
+    padding: 8px;
+    margin: 1px 0;
+    font-size: 14px;
+    border: 0;
+}
+
+.button {
+    border: 0;
+    cursor: pointer;
+}
+
+.button:hover {
+    background-color: crimson;
+    color: white;
+}
+
+.button:active {
+    background-color: dimgray;
+}
+
+.error {
+    font-size: 12px;
+    margin-bottom: 4px;
+    color: crimson;
+}
+
+.notAllowed {
+    text-align: center;
+}
+
+.backButton {
+    background-color: #db5752;
+    color: white;
+    border-radius: 10px;
+    border: 1px solid #db5752;
+    padding: 5px 15px;
+    font-weight: bold;
+}
