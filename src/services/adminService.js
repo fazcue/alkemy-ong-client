@@ -1,7 +1,9 @@
 import axios from 'axios'
 
+const SERVER_BASE_URL = process.env.REACT_APP_SERVER_BASE_URL
+
 let adminAxios = axios.create({
-    baseURL: 'http://localhost:3001'
+    baseURL: SERVER_BASE_URL
 })
 
 const adminService = {

@@ -1,1 +1,3 @@
-export const BASE_PATH = 'http://localhost:3001'
+const SERVER_BASE_URL = process.env.REACT_APP_SERVER_BASE_URL
+
+export const BASE_PATH = SERVER_BASE_URL

@@ -3,6 +3,7 @@ import adminService from "../../../services/adminService"
 import ListGroup from 'react-bootstrap/ListGroup';
 import Button from 'react-bootstrap/Button';
 
+const SERVER_BASE_URL = process.env.REACT_APP_SERVER_BASE_URL
 
 const CategoriesPanel = ({ defaultCatg }) => {
     const [category, setCategori] = useState(defaultCatg)
@@ -19,7 +20,7 @@ const CategoriesPanel = ({ defaultCatg }) => {
 
     /*  const handleDelete = () => {
          console.log(`click en delete ${b.id}`)
-         fetch(`http://localhost:3001/categories/delete/${b.id}`, {
+         fetch(`${SERVER_BASE_URL}/categories/delete/${b.id}`, {
              method: "DELETE"
          })
              .then(response => {
@@ -43,7 +44,7 @@ const CategoriesPanel = ({ defaultCatg }) => {
                         <ListGroup.Item>{i + 1}.-{b.name}<Button variant="danger"
 
                             onClick={() => {
-                                fetch(`http://localhost:3001/categories/delete/${b.id}`, {
+                                fetch(`${SERVER_BASE_URL}/categories/delete/${b.id}`, {
                                     method: "DELETE"
                                 })
                                     .then(response => {

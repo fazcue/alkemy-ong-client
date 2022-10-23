@@ -8,6 +8,8 @@ import { Facebook, Instagram, Twitter } from 'react-bootstrap-icons'
 //styles
 import styles from './Footer.module.css'
 
+const SERVER_BASE_URL = process.env.REACT_APP_SERVER_BASE_URL
+
 //dummy data (replace it with data receive from public endpoint when available)
 const links = [
     {
@@ -44,7 +46,7 @@ const Footer = () => {
     const [socialLinks, setSocialLinks] = useState([])
 
     useEffect(() => {
-        fetch('http://localhost:3001/organizations/1/public')
+        fetch(`${SERVER_BASE_URL}/organizations/1/public`)
             .then(response => response.json())
             .then(data => setSocialLinks(data.socialLinks))
     }, []);

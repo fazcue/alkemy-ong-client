@@ -1,5 +1,8 @@
 import axios from 'axios'
-axios.defaults.baseURL = 'http://localhost:3001/users/auth'
+
+const SERVER_BASE_URL = process.env.REACT_APP_SERVER_BASE_URL
+
+axios.defaults.baseURL = `${SERVER_BASE_URL}/users/auth`
 
 const authService = {
     checkEmail: async (data) => {
@@ -15,6 +18,5 @@ const authService = {
         return await axios.post("/login", data)
     }
 }
-
 
 export default authService;
