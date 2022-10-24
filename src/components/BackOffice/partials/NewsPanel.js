@@ -21,7 +21,6 @@ const NewsPanel = () => {
     }, [])
 
     const handleUpdate = async (data) => {
-        data.categoryId = 'news';
         setNewsData(data)
         const a = document.getElementById("formDiv");
         if(document.documentElement.scrollWidth < 1000) {

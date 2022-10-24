@@ -22,7 +22,9 @@ const MIN_CONTENT = 50
 
 const NewsForm = ({ data }) => {
     const action = data?.id ? 'put' : 'post'
-    const currentData = data || {name: '', content: '', categoryId: '1', image: ''}
+    const currentData = data || {name: '', content: '', categoryId: 1, image: ''}
+
+    console.log('data', data)
 
     //Formik validation schema using Yup
     const activitySchema = Yup.object().shape({
@@ -102,7 +104,7 @@ const NewsForm = ({ data }) => {
                     {errors.name && touched.name && <ErrorMessage message={errors.name} />}
 
                     <label htmlFor='featuredImage' className={styles.uploadImage}>Selecciona una imagen (PNG, JPG)</label>
-                    <input name='image' id='featuredImage' type='file' accept='image/*' onChange={e => setFieldValue('image', e.target.files[0])} required />
+                    <input name='image' id='featuredImage' type='file' accept='image/*' onChange={e => setFieldValue('image', e.target.files[0])} />
                     {errors.image && touched.image && <ErrorMessage message={errors.image} />}
 
                     {values.image && <img src={(typeof values.image === 'string') ? values.image : URL.createObjectURL(values.image)} alt='descatada' style={{width: '100%'}} />}
