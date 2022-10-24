@@ -22,7 +22,7 @@ const MIN_CONTENT = 50
 
 const NewsForm = ({ data }) => {
     const action = data?.id ? 'put' : 'post'
-    const currentData = data || {name: '', content: '', categoryId: null, image: null}
+    const currentData = data || {name: '', content: '', categoryId: '1', image: ''}
 
     //Formik validation schema using Yup
     const activitySchema = Yup.object().shape({

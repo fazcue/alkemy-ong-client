@@ -51,6 +51,7 @@ const FormCont = () => {
   const vDataContac = yup.object().shape({
     name: yup.string().required("Requerido"),
     email: yup.string().email("Formato Email inválido").required("Requerido"),
+    phone: yup.number().required("Requerido"),
     message: yup
       .string()
       .min(2)
@@ -92,7 +93,7 @@ const FormCont = () => {
           </div>      
           <div className= 'containerForm col-sm-6 pb-4'>
             <Formik
-              initialValues={{ name: "", email: "", message: "" }}
+              initialValues={{ name: "", email: "",phone:"", message: "" }}
               validationSchema={vDataContac}
               // onSubmit={async (values) => {
               //   await new Promise((resolve) => setTimeout(resolve, 500));
@@ -116,6 +117,12 @@ const FormCont = () => {
                     <Field className="input" name="email" placeholder="Email" />
                     {errors.email && touched.email ? (
                       <div className="requerido">{errors.email}</div>
+                    ) : null}
+                  </div>
+                  <div>
+                    <Field className="input" name="phone" placeholder="Telefono" />
+                    {errors.phone && touched.phone ? (
+                      <div className="requerido">{errors.phone}</div>
                     ) : null}
                   </div>
                   <div>

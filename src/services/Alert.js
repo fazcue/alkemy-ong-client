@@ -39,3 +39,22 @@ export function alertWaiting (titulo, mensaje){
 export function closeCurrentAlert (){
   Swal.close()
 }
+
+export async function alertWarning (titulo){
+  let res = false
+  await Swal.fire({
+    title: '¿Estás seguro?',
+    html: `<strong>${titulo}</strong> se borrará definitivamente`,
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Si, eliminar!',
+    cancelButtonText: 'Cancelar'
+  }).then((result) => {
+    if (result.isConfirmed) {
+      res = true
+    }
+  })
+  return res
+}

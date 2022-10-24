@@ -1,0 +1,15 @@
+.cardContainer {
+  background-color: #fffc9d;
+  padding: 1.5rem;
+  border-radius: 30px;
+  display: flex;
+  flex-direction: column;
+}
+
+.image {
+  height: 130px;
+}
+
+.infoContainer {
+  padding-top: 1rem;
+}

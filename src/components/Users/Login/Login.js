@@ -87,7 +87,7 @@ const LoginForm = () => {
                     lastName: userData.lastName,
                     email: userData.email,
                     image: userData.image,
-                    roleId: userData.roleId,
+                    role: userData.roleId,
                     token: token
                 }
 

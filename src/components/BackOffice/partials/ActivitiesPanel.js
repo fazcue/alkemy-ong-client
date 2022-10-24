@@ -1,12 +1,16 @@
 import React, { useEffect, useState } from 'react'
 import publicService from '../../../services/publicService'
+import { customFetch } from '../../../services/fetch'
 import s from './styles/ActivitiesPanel.module.css'
+import { alertError, alertWarning } from '../../../services/Alert'
 
 import ActivitiesForm from '../../BackOffice/activityForm/ActivityForm'
 
+const SERVER_BASE_URL = process.env.REACT_APP_SERVER_BASE_URL
+
 const ActivitiesPanel = () => {
     const [activities, setActivities] = useState([])
-    const [newData, setNewData] = useState({})
+    const [activityData, setActivityData] = useState({})
 
     useEffect(() => {
         async function getData() {
@@ -18,7 +22,7 @@ const ActivitiesPanel = () => {
 
     const handleUpdate = async (data) => {
         data.categoryId = 'activities';
-        setNewData(data)
+        setActivityData(data)
         const a = document.getElementById("formDiv");
         if(document.documentElement.scrollWidth < 1000) {
             a.scrollIntoView({
@@ -34,7 +38,28 @@ const ActivitiesPanel = () => {
                 behavior: "smooth"
             })
         }
-        setNewData({})
+        setActivityData({})
+    }
+
+    const handleDelete = async ({id, name}) => {
+        const deleteConfirmation = await alertWarning(name)
+
+        if (deleteConfirmation) {
+            try {
+                const url = `${SERVER_BASE_URL}/activities/${id}`
+                const properties = {
+                    method: 'delete'
+                }
+    
+                await customFetch(url, properties)
+                
+                //if deleted, refresh news
+                handleRefresh()
+                setActivityData({})
+            } catch (error) {
+                alertError('Error al borrar', 'Por favor, prueba nuevamente')
+            }
+        }
     }
 
     const handleRefresh = async () => {
@@ -56,15 +81,16 @@ const ActivitiesPanel = () => {
             <div className={s.activitiesListContainer}>
                 <ul className={s.activitiesList}>
                     {
-                        activities.length && activities.map((e) => (
-                            <div key={e.id} className={s.listItemContainer}>
+                        activities.length && activities.map(activity => (
+                            <div key={activity.id} className={s.listItemContainer}>
                                 <li className={s.listItem}>
                                     <div className={s.imageContainer}>
-                                        <img src={e.image} alt="Image" className={s.image}/>
+                                        <img src={activity.image} alt={activity.name} className={s.image}/>
                                     </div>
                                     <div className={s.dataContainer}>
-                                        <h5 className={s.activitiesName}> {e.name} </h5>  
-                                        <button onClick={() => handleUpdate(e)} className={s.button}>Modificar</button>
+                                        <h5 className={s.activitiesName}> {activity.name} </h5>  
+                                        <button onClick={() => handleUpdate(activity)} className={s.button}>Modificar</button>
+                                        <button onClick={() => handleDelete(activity)} className={s.button}>Eliminar</button>
                                     </div>
                                 </li>
                             </div>
@@ -80,7 +106,7 @@ const ActivitiesPanel = () => {
             </div>
             <div id='formDiv' className={s.activitiesFormContainer}>
                {
-                newData.id ? (<ActivitiesForm data={newData}/>) : ( <ActivitiesForm/>) 
+                activityData.id ? (<ActivitiesForm data={activityData}/>) : ( <ActivitiesForm/>) 
                }
             </div>
         </div>

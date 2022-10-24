@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 import Main from './components/Main/Main/Main'
@@ -15,46 +15,58 @@ import NewsDetail from './components/News/NewsDetail/NewsDetail'
 import LoginRouteGuard from './LoginRouteGuard';
 import Layout from './components/Layout/Layout';
 import AboutUs from './components/AboutUs/AboutUs' 
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { refresh } from './reducers/userReducer'
 import { BASE_PATH } from './utils/constants'
 import { customFetch } from './services/fetch'
+import ProtectedRoute from './features/protectedRoute/ProtectedRoute'
+import TestimonialsHome from './components/Testimonials/TestimonialsHome/TestimonialsHome';
 
 function App() {
+  // const location = useLocation();
   const token = localStorage.getItem('token')
   const dispatch = useDispatch()
   const refreshURL = `${BASE_PATH}/auth/me`
   const refreshProperties = {
     method: 'get'
   }
-
-  if(token){
-  customFetch(refreshURL, refreshProperties)
-    .then(user => {
-      let userObj = {
-        id: user.data.payload.id,
-        firstName: user.data.payload.firstName,
-        lastName: user.data.payload.lastName,
-        email: user.data.payload.email,
-        image: user.data.payload.image,
-        roleId: user.data.payload.roleId,
-        token
+  useEffect(() => {
+    if(token){
+      customFetch(refreshURL, refreshProperties)
+        .then(user => {
+          let userObj = {
+            id: user.data.payload.id,
+            firstName: user.data.payload.firstName,
+            lastName: user.data.payload.lastName,
+            email: user.data.payload.email,
+            image: user.data.payload.image,
+            role: user.data.payload.roleId,
+            token
+          }
+    
+          dispatch(refresh(userObj))
+        })
+          .catch(error => console.log(error))
       }
-      dispatch(refresh(userObj))
-    })
-      .catch(error => console.log(error))
-  }
+  }, [])
+
+
+  const userData = useSelector(store => store.user)
 
   return (
     <div className="App">
       <Routes>
         <Route path="/*" element={<MainSPA />} />
-        <Route element={<LoginRouteGuard/>}>
+        {/* <Route path="/contact" element={<ScreenContact />} /> */}
+        <Route element={<ProtectedRoute isAllowed={!!userData && userData.roleId == 1} />}>
           <Route path="/backOffice/*" element={ <BackOffice/> } />
+          {/* <Route path="/backoffice/users" element={<UsersTable />} /> */}
+          {/* <Route path="/backoffice/activities" element={<Activities />} />     */}
+          {/* <Route exact path='/backoffice/contacts' element={<ContactsPanel />} /> */}
+          {/* <Route path='/backoffice/newspanel' element={<NewsPanel/>} /> */}
         </Route>
       </Routes>
     </div>
-    
   );
 }
 
@@ -73,6 +85,7 @@ function MainSPA() {
         <Route path='/actividades/:id' element={<ActivityDetail />} />
         <Route path="/registrarse" element={<Register />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/testimonios" element={<TestimonialsHome />} />
       </Routes>
     </Layout>
   );

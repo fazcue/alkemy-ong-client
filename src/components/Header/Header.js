@@ -4,9 +4,11 @@ import { List, X, Sliders  } from 'react-bootstrap-icons'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { logout } from '../../reducers/userReducer'
-
-
-
+import {BASE_PATH} from '../../utils/constants'
+import {customFetch} from '../../services/fetch'
+import Swal from 'sweetalert2'
+import { ToastContainer, toast } from "react-toastify"
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function Header() {
 
@@ -19,6 +21,55 @@ export default function Header() {
     localStorage.removeItem('token')
     dispatch(logout())
     navigate('/')
+  }
+
+
+  const handleDelete = () => {
+    Swal.fire({
+      title: 'Eliminar usuario',
+      icon: 'warning',
+      text: 'Verdaderamente desea eliminar su usuario?',
+      showDenyButton:true,
+      confirmButtonText: 'Si',
+      denyButtonText: 'Cancelar'
+    }).then(result=> {
+      if(result.isConfirmed){
+        const url = `${BASE_PATH}/users/${userData.id}`
+        const properties = {
+          method: 'delete'
+        }
+        customFetch(url, properties)
+          .then(data => {
+            toast.success( data.data , {
+              position: "top-right",
+              autoClose: 1500,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+          })
+            dispatch(logout())
+            localStorage.removeItem('token')
+            navigate('/')
+          })
+          .catch(error => {
+            toast.error(error.message , {
+              position: "top-right",
+              autoClose: 1000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+          })
+          })
+      } else if (result.isDenied){
+        Swal.fire('Se ha cancelado la eliminacion', '', 'info')
+      }
+    })
+
+
   }
 
   return (
@@ -47,15 +98,16 @@ export default function Header() {
             </div>
           }
         </div>
-        <BurguerIcon userData={userData} handleLogout={handleLogout}/>
+        <BurguerIcon userData={userData} handleLogout={handleLogout} handleDelete={handleDelete}/>
       </div>
       <div className='hidden'></div>
+      <ToastContainer/>
     </>
   )
 }
 
 
-function BurguerIcon({ userData, handleLogout }) {
+function BurguerIcon({ userData, handleLogout, handleDelete }) {
 
   const [openMenu, setOpenMenu] = useState(false)
 
@@ -64,18 +116,19 @@ function BurguerIcon({ userData, handleLogout }) {
    <div className='burguer-menu' onClick={() => setOpenMenu(!openMenu)}> 
     {!openMenu ? <List size={36}/> : <X size={36}/>}
    </div>
-   {openMenu && <BurguerMenu setOpenMenu={setOpenMenu} openMenu={openMenu} userData={userData} handleLogout={handleLogout}/>}
+   {openMenu && <BurguerMenu setOpenMenu={setOpenMenu} openMenu={openMenu} userData={userData} handleLogout={handleLogout} handleDelete={handleDelete}/>}
    </div>
   )
 }
 
-function BurguerMenu({ setOpenMenu, openMenu, userData, handleLogout }) {
+function BurguerMenu({ setOpenMenu, openMenu, userData, handleLogout, handleDelete }) {
 
   let location = useLocation()
 
   return(
 
     <ul className='burguer-list'>
+      {userData.id ? <li className='burguer-register' onClick={handleDelete}>Eliminar perfil</li> : null}
       {userData.id ? /*ARMAR EDICION DE PERFIL*/null : <Link to='Login'><li className='burguer-login' onClick={() => setOpenMenu(!openMenu)}>Login</li></Link>}
       {userData.id ? <li className='burguer-register' onClick={handleLogout}>Cerrar sesion</li> : <Link to='Registrarse'><li className='burguer-register' onClick={() => setOpenMenu(!openMenu)}>Registrate</li></Link>}
       <Link to="/nosotros" ><li  className={`${location.pathname === "/nosotros" ? 'active' : '' }`} onClick={() => setOpenMenu(!openMenu)}>Nosotros</li></Link>
