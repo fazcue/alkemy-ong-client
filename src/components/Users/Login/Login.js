@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React from "react"
 import { useNavigate } from "react-router-dom"
 import { Formik, Field, Form } from "formik"
 import * as Yup from "yup"
@@ -10,8 +10,9 @@ import { BASE_PATH } from '../../../utils/constants'
 import { useDispatch, useSelector } from 'react-redux'
 import { login } from '../../../reducers/userReducer'
 import { Link } from 'react-router-dom'
+import ErrorMessage from "../../../features/errorMessage/ErrorMessage"
 
-import "./Login.css"
+import styles from "./Login.module.css"
 
 const LoginForm = () => {
 
@@ -40,12 +41,6 @@ const LoginForm = () => {
                     return true
                 }),
     }) // Hace un fetch cada vez que tocas una tecla y el tema de que las validaciones las hace el controlador de login tipo seria 3 fetch para loguearte aparte que se tendrian que crear los controladores
-
-    const ErrorMessage = ({ message }) => {
-        return (
-            <small className="errorMessage">{message}</small>
-        )
-    }
 
     const getUserData = async () => {
         try {
@@ -114,15 +109,16 @@ const LoginForm = () => {
 
     if (userData.id) {
         return(
-            <div className='notAllowed'>
+            <div className={styles.notAllowed}>
             <h1>Ya estas logueado</h1>
-            <Link to='/'><button className='backButton' type='button'>volver</button></Link>
+            <Link to='/'><button className={styles.backButton} type='button'>volver</button></Link>
             </div>
         )
     }
 
     return (
-        <>
+        <div className={styles.container}>
+            <h1>Ingresar a tu cuenta</h1>
             <Formik
                 initialValues={{email: '', password: ''}}
                 validateOnChange= {false}
@@ -131,7 +127,7 @@ const LoginForm = () => {
                 validationSchema={loginSchema}
             >
                 {({ errors, touched }) => (
-                    <Form className="loginForm">
+                    <Form className={styles.loginForm}>
 
                         <Field type="email" name="email" placeholder="Email"/>
                         {errors.email && touched.email && <ErrorMessage message={errors.email} />}
@@ -139,13 +135,13 @@ const LoginForm = () => {
                         <Field type="password" name="password" placeholder="Contraseña"/>
                         {errors.password && touched.password && <ErrorMessage message={errors.password} />}
 
-                        <Field type="submit" name="submit" value="Iniciar sesión" className="loginButton" />
+                        <Field type="submit" name="submit" value="Iniciar sesión" className={styles.loginButton} />
 
                     </Form>
                 )}
             </Formik>
             <ToastContainer/>
-        </>
+        </div>
     )
 }
 

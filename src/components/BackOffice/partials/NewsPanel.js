@@ -10,7 +10,7 @@ import Loader from '../../Loader/Loader'
 const SERVER_BASE_URL = process.env.REACT_APP_SERVER_BASE_URL
 
 const NewsPanel = () => {
-    const [news, setNews] = useState([])
+    const [news, setNews] = useState(null)
     const [newsData, setNewsData] = useState({})
 
     useEffect(() => {
@@ -80,24 +80,27 @@ const NewsPanel = () => {
             </div>
             <div className={s.newsListContainer}>
                 <ul className={s.newsList}>
-                    {
-                        !news.length ? 
-                        <Loader /> 
-                        : news.map((currentNews) => (
-                            <div key={currentNews.id} className={s.listItemContainer}>
-                                <li className={s.listItem}>
-                                    <div className={s.imageContainer}>
-                                        <img src={currentNews.image} alt={currentNews.name} className={s.image}/>
-                                    </div>
-                                    
-                                    <div className={s.dataContainer}>
-                                        <h5 className={s.newsName}> {currentNews.name} </h5>  
-                                        <button onClick={() => handleUpdate(currentNews)} className={s.button}>Modificar</button>
-                                        <button onClick={() => handleDelete(currentNews)} className={s.button}>Eliminar</button>
-                                    </div>
-                                </li>
-                            </div>
-                        ))  
+                    {!news ?
+                        <Loader />
+                    :
+                        news.length > 0 ? 
+                            news.map((currentNews) => (
+                                <div key={currentNews.id} className={s.listItemContainer}>
+                                    <li className={s.listItem}>
+                                        <div className={s.imageContainer}>
+                                            <img src={currentNews.image} alt={currentNews.name} className={s.image}/>
+                                        </div>
+                                        
+                                        <div className={s.dataContainer}>
+                                            <h5 className={s.newsName}> {currentNews.name} </h5>  
+                                            <button onClick={() => handleUpdate(currentNews)} className={s.button}>Modificar</button>
+                                            <button onClick={() => handleDelete(currentNews)} className={s.button}>Eliminar</button>
+                                        </div>
+                                    </li>
+                                </div>
+                            ))
+                        :
+                        <p className='text-center'>No se encontraron novedades</p>
                     }
                 </ul>
             </div>

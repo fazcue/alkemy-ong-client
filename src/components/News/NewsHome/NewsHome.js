@@ -28,11 +28,11 @@ const NewsHome = () => {
 
     if (!news) {
         return (
-            <>
+            <div>
                 <h1>Listado de Novedades</h1>
                 <Loader />
-                <p>Cargando...</p>
-            </>
+                <p className='text-center'>Cargando...</p>
+            </div>
         )
     }
 
@@ -40,7 +40,7 @@ const NewsHome = () => {
         <>
             <h1>Listado de Novedades</h1>
             {news.length === 0 ?
-                <p>No se encontraron novedades.</p>
+                <p className='text-center'>No se encontraron novedades.</p>
             :
                 <FlexList list={news} section='novedades' />
             }

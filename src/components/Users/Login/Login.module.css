@@ -5,21 +5,21 @@
     margin: 0 12px auto;
 }
 
-.registerForm {
+.loginForm {
     display: flex;
     flex-direction: column;
     max-width: 400px;
     width: 100%;
     background-color: var(--circle-color);
     padding: 12px;
-    margin: 12px;
+    margin: 12px 0;
     border-radius: 1rem;
     box-shadow: 10px 10px 50px 0px rgba(11, 92, 172, 0.541);
     -webkit-box-shadow: 10px 10px 50px 0px rgba(11, 92, 172, 0.541);
     -moz-box-shadow: 10px 10px 50px 0px rgba(11, 92, 172, 0.541);
 }
 
-.registerForm input {
+.loginForm input {
     padding: 18px;
     margin: 12px 0;
     font-size: 18px;
@@ -27,22 +27,22 @@
     border-radius: 8px
 }
 
-.button {
+.loginButton {
     border: 0;
     cursor: pointer;
     background-color: var(--square-color);
 }
 
-.button:hover {
+.loginButton:hover {
     background-color: var(--triangle-color);
     color: white;
 }
 
-.button:active {
+.loginButton:active {
     background-color: dimgray;
 }
 
-.error {
+.errorMessage {
     font-size: 12px;
     margin-bottom: 4px;
     color: var(--triangle-color-hover);

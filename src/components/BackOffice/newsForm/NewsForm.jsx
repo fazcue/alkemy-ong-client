@@ -24,8 +24,6 @@ const NewsForm = ({ data }) => {
     const action = data?.id ? 'put' : 'post'
     const currentData = data || {name: '', content: '', categoryId: 1, image: ''}
 
-    console.log('data', data)
-
     //Formik validation schema using Yup
     const activitySchema = Yup.object().shape({
         name: Yup.string().min(MIN_NAME, 'Nombre muy corto').max(MAX_NAME, 'Nombre muy largo').required('Requerido'),
@@ -103,11 +101,11 @@ const NewsForm = ({ data }) => {
                     <Field name='name' placeholder='Nombre de la novedad' required />
                     {errors.name && touched.name && <ErrorMessage message={errors.name} />}
 
-                    <label htmlFor='featuredImage' className={styles.uploadImage}>Selecciona una imagen (PNG, JPG)</label>
+                    <label htmlFor='featuredImage' className={styles.uploadImage}>{values.image ? 'Cambiar' : 'Selecciona una'} imagen (PNG, JPG)</label>
                     <input name='image' id='featuredImage' type='file' accept='image/*' onChange={e => setFieldValue('image', e.target.files[0])} />
                     {errors.image && touched.image && <ErrorMessage message={errors.image} />}
 
-                    {values.image && <img src={(typeof values.image === 'string') ? values.image : URL.createObjectURL(values.image)} alt='descatada' style={{width: '100%'}} />}
+                    {values.image && <img src={(typeof values.image === 'string') ? values.image : URL.createObjectURL(values.image)} alt='descatada' className={styles.image} />}
 
                     <Field name='categoryId' type='number' placeholder='ID Categoria' required />
                     {errors.type && touched.type && (<ErrorMessage message={errors.type} />)}

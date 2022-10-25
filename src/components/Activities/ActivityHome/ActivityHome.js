@@ -31,7 +31,7 @@ const ActivitiesHome = () => {
             <>
                 <h1>Listado de Actividades</h1>
                 <Loader />
-                <p>Cargando...</p>
+                <p className='text-center'>Cargando...</p>
             </>
         )
     }
@@ -40,7 +40,7 @@ const ActivitiesHome = () => {
         <>
             <h1>Listado de Actividades</h1>
             {activities.length === 0 ?
-                <p>No se encontraron actividades.</p>
+                <p className='text-center'>No se encontraron actividades.</p>
             :
                 <FlexList list={activities} section='actividades' />
             }

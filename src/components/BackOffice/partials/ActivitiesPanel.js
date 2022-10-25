@@ -10,7 +10,7 @@ import Loader from '../../Loader/Loader'
 const SERVER_BASE_URL = process.env.REACT_APP_SERVER_BASE_URL
 
 const ActivitiesPanel = () => {
-    const [activities, setActivities] = useState([])
+    const [activities, setActivities] = useState(null)
     const [activityData, setActivityData] = useState({})
 
     useEffect(() => {
@@ -81,23 +81,26 @@ const ActivitiesPanel = () => {
             </div>
             <div className={s.activitiesListContainer}>
                 <ul className={s.activitiesList}>
-                    {
-                        !activities.length ? 
-                        <Loader/>
-                        : activities.map(activity => (
-                            <div key={activity.id} className={s.listItemContainer}>
-                                <li className={s.listItem}>
-                                    <div className={s.imageContainer}>
-                                        <img src={activity.image} alt={activity.name} className={s.image}/>
-                                    </div>
-                                    <div className={s.dataContainer}>
-                                        <h5 className={s.activitiesName}> {activity.name} </h5>  
-                                        <button onClick={() => handleUpdate(activity)} className={s.button}>Modificar</button>
-                                        <button onClick={() => handleDelete(activity)} className={s.button}>Eliminar</button>
-                                    </div>
-                                </li>
-                            </div>
-                        ))
+                    {!activities ? 
+                        <Loader/> 
+                    :
+                        activities.length > 0 ? 
+                            activities.map(activity => (
+                                <div key={activity.id} className={s.listItemContainer}>
+                                    <li className={s.listItem}>
+                                        <div className={s.imageContainer}>
+                                            <img src={activity.image} alt={activity.name} className={s.image}/>
+                                        </div>
+                                        <div className={s.dataContainer}>
+                                            <h5 className={s.activitiesName}> {activity.name} </h5>  
+                                            <button onClick={() => handleUpdate(activity)} className={s.button}>Modificar</button>
+                                            <button onClick={() => handleDelete(activity)} className={s.button}>Eliminar</button>
+                                        </div>
+                                    </li>
+                                </div>
+                            ))
+                        :
+                        <p className='text-center'>No se encontraron actividades</p>
                     }
                 </ul>
             </div>

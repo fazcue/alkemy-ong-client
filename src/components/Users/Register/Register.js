@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React from "react"
 import { useNavigate, Link } from "react-router-dom"
 import { Formik, Field, Form } from "formik"
 import * as Yup from "yup"
@@ -8,6 +8,7 @@ import { customFetch } from '../../../services/fetch'
 import { BASE_PATH } from '../../../utils/constants'
 import { useDispatch, useSelector} from 'react-redux'
 import { login } from '../../../reducers/userReducer'
+import ErrorMessage from "../../../features/errorMessage/ErrorMessage"
 
 
 //styles
@@ -34,12 +35,6 @@ const RegisterForm = () => {
             }),
         password: Yup.string().required('Requerido').min(6, 'Contraseña muy corta')
     })
-
-    const ErrorMessage = ({ message }) => {
-        return (
-            <small className={styles.error}>{message}</small>
-        )
-    }
 
     const getUserData = async () => {
         try {
@@ -113,7 +108,8 @@ const RegisterForm = () => {
     }
 
     return (
-        <>
+        <div className={styles.container}>
+            <h1>Crear una cuenta</h1>
             <Formik
                 initialValues={{firstName: '', lastName: '', email: '', password: ''}}
                 validateOnBlur = {false}
@@ -142,7 +138,7 @@ const RegisterForm = () => {
                 )}
             </Formik>
             <ToastContainer/>
-        </>
+        </div>
     )
 }
 

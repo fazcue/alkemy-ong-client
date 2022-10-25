@@ -2,47 +2,49 @@
   display: flex;
   flex-direction: column;
   min-width: 200px;
-  background-color:lightblue;
+  border: 1px solid var(--light-blue-color);
   padding: 12px;
   border-radius: 5px;
-  margin: 12px;
 }
 
 .newsForm input {
   padding: 8px;
-  margin: 1px 0;
-  font-size: 14px;
+  margin: 2px 0;
   border: 0;
+  border: .5px solid var(--light-color);
 }
 
 .button {
   border: 0;
   cursor: pointer;
+  transition: all 0.1s ease-in-out;
 }
 
 .button:hover {
-  background-color: crimson;
+  background-color: var(--light-blue-color);
   color: white;
 }
 
-.button:active {
-  background-color: dimgray;
-}
-
-.error {
-  font-size: 12px;
-  margin-bottom: 4px;
-  color: crimson;
-}
-
 .ckEditor {
-  font-size: 14px;
+  margin: 2px 0;
 }
 
 .uploadImage {
   padding: 8px;
+  margin: 2px 0;
   background-color: white;
   cursor: pointer;
+  border: .5px solid var(--light-color);
+}
+
+.uploadImage:hover {
+  background-color: var(--light-color);
+  transition: all 0.1s ease-in-out;
+}
+
+.image {
+  margin: 2px 0;
+  max-width: 300px;
 }
 
 input[type=file] {
