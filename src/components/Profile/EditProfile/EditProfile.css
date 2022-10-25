@@ -1,0 +1,11 @@
+.edit-profile-input {
+   border-radius: 10px;
+   padding:6px; 
+   border: 1px solid #9ac9fb;
+}
+
+.edit-profile-input::placeholder {
+    color:#868e96;
+    opacity:1;
+    text-align: center;
+}

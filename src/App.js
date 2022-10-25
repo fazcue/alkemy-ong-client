@@ -21,6 +21,8 @@ import { BASE_PATH } from './utils/constants'
 import { customFetch } from './services/fetch'
 import ProtectedRoute from './features/protectedRoute/ProtectedRoute'
 import TestimonialsHome from './components/Testimonials/TestimonialsHome/TestimonialsHome';
+import Profile from './components/Profile/Profile';
+import EditProfile from './components/Profile/EditProfile/EditProfile';
 
 function App() {
   // const location = useLocation();
@@ -56,7 +58,7 @@ function App() {
   return (
     <div className="App">
       <Routes>
-        <Route path="/*" element={<MainSPA />} />
+        <Route path="/*" element={<MainSPA userData={userData} />} />
         {/* <Route path="/contact" element={<ScreenContact />} /> */}
         <Route element={<ProtectedRoute isAllowed={!!userData && userData.roleId == 1} />}>
           <Route path="/backOffice/*" element={ <BackOffice/> } />
@@ -70,14 +72,16 @@ function App() {
   );
 }
 
-function MainSPA() {
+function MainSPA({ userData }) {
+
 
   return (
     <Layout>
       <Routes>
         <Route path="/" element={<Main />} />
-
         <Route path="/contacto" element={<Contact />} />
+        <Route path="/usuario/:id" element={<Profile />} />
+        <Route path="/usuario/editar/:id" element={<EditProfile />} />
         <Route path="/nosotros" element={<AboutUs/>} />
         <Route path="/novedades" element={<NewsHome />} />
         <Route path="/novedades/:id" element={<NewsDetail />} />

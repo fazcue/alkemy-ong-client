@@ -1,6 +1,6 @@
 import './Header.css'
 import React, { useState } from 'react'
-import { List, X, Sliders  } from 'react-bootstrap-icons'
+import { List, X, Sliders, Person  } from 'react-bootstrap-icons'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { logout } from '../../reducers/userReducer'
@@ -24,53 +24,7 @@ export default function Header() {
   }
 
 
-  const handleDelete = () => {
-    Swal.fire({
-      title: 'Eliminar usuario',
-      icon: 'warning',
-      text: 'Verdaderamente desea eliminar su usuario?',
-      showDenyButton:true,
-      confirmButtonText: 'Si',
-      denyButtonText: 'Cancelar'
-    }).then(result=> {
-      if(result.isConfirmed){
-        const url = `${BASE_PATH}/users/${userData.id}`
-        const properties = {
-          method: 'delete'
-        }
-        customFetch(url, properties)
-          .then(data => {
-            toast.success( data.data , {
-              position: "top-right",
-              autoClose: 1500,
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
-              progress: undefined,
-          })
-            dispatch(logout())
-            localStorage.removeItem('token')
-            navigate('/')
-          })
-          .catch(error => {
-            toast.error(error.message , {
-              position: "top-right",
-              autoClose: 1000,
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
-              progress: undefined,
-          })
-          })
-      } else if (result.isDenied){
-        Swal.fire('Se ha cancelado la eliminacion', '', 'info')
-      }
-    })
 
-
-  }
 
   return (
     <>
@@ -89,6 +43,7 @@ export default function Header() {
           {userData.id ?
             <div>
               {userData.roleId === 1 && <Link to='backOffice'><button className='login'><Sliders/></button></Link>}
+              <Link to={`usuario/${userData.id}`}><button className='login profile-button'><Person width={30} size={28} />{userData.firstName}</button></Link>
               <button className='register' onClick={handleLogout}>Cerrar Sesion</button>
             </div>
           :
@@ -98,7 +53,7 @@ export default function Header() {
             </div>
           }
         </div>
-        <BurguerIcon userData={userData} handleLogout={handleLogout} handleDelete={handleDelete}/>
+        <BurguerIcon userData={userData} handleLogout={handleLogout}/>
       </div>
       <div className='hidden'></div>
       <ToastContainer/>
@@ -107,7 +62,7 @@ export default function Header() {
 }
 
 
-function BurguerIcon({ userData, handleLogout, handleDelete }) {
+function BurguerIcon({ userData, handleLogout, }) {
 
   const [openMenu, setOpenMenu] = useState(false)
 
@@ -116,7 +71,7 @@ function BurguerIcon({ userData, handleLogout, handleDelete }) {
    <div className='burguer-menu' onClick={() => setOpenMenu(!openMenu)}> 
     {!openMenu ? <List size={36}/> : <X size={36}/>}
    </div>
-   {openMenu && <BurguerMenu setOpenMenu={setOpenMenu} openMenu={openMenu} userData={userData} handleLogout={handleLogout} handleDelete={handleDelete}/>}
+   {openMenu && <BurguerMenu setOpenMenu={setOpenMenu} openMenu={openMenu} userData={userData} handleLogout={handleLogout} />}
    </div>
   )
 }
@@ -128,7 +83,6 @@ function BurguerMenu({ setOpenMenu, openMenu, userData, handleLogout, handleDele
   return(
 
     <ul className='burguer-list'>
-      {userData.id ? <li className='burguer-register' onClick={handleDelete}>Eliminar perfil</li> : null}
       {userData.id ? /*ARMAR EDICION DE PERFIL*/null : <Link to='Login'><li className='burguer-login' onClick={() => setOpenMenu(!openMenu)}>Login</li></Link>}
       {userData.id ? <li className='burguer-register' onClick={handleLogout}>Cerrar sesion</li> : <Link to='Registrarse'><li className='burguer-register' onClick={() => setOpenMenu(!openMenu)}>Registrate</li></Link>}
       <Link to="/nosotros" ><li  className={`${location.pathname === "/nosotros" ? 'active' : '' }`} onClick={() => setOpenMenu(!openMenu)}>Nosotros</li></Link>

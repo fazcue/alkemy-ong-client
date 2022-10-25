@@ -160,3 +160,6 @@ nav button:hover {
     }
 }
 
+.profile-button {
+    font-weight: bold !important;
+}
