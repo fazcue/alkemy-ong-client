@@ -1,6 +1,6 @@
 .sidebarContainer{
     width: 250px;
-    padding: 20px;
+    padding: 14px;
     background-color: ghostwhite;
 }
 .sidebarLogo{
@@ -64,8 +64,8 @@
 .sidebarLogoutButton{
     all:unset;
     box-sizing: border-box;
+    text-align: center;
     padding: 10px 15px;
-    margin-bottom: 1rem;
     text-decoration: none;
     color: darkslategray;
     border: 1px solid darkslategray;

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import {Link} from 'react-router-dom'
 import { customFetch } from '../../../services/fetch'
 import Loader from '../../Loader/Loader'
 import TestimonialsCard from '../TestimonialsCard/TestimonialsCard'
@@ -40,6 +41,10 @@ const TestimonialsHome = () => {
     return (
         <>
             <h1>Testimonios</h1>
+            <div className="d-flex justify-content-end">
+                <Link to="/backOffice/addTestimonial"><div className="btn btn-primary">Agregar mi testimonio</div></Link>
+
+            </div>
             {testimonials.length === 0 ?
                 <p>No se encontraron testimonios.</p>
             :

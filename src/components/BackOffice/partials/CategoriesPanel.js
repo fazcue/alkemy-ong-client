@@ -41,10 +41,10 @@ const CategoriesPanel = ({ defaultCatg }) => {
             {(category) &&
                 category.map((b, i) => (
                     <ListGroup className="col-sm-8 py-2 mx-auto">
-                        <ListGroup.Item>{i + 1}.-{b.name}<Button variant="danger"
+                        <ListGroup.Item className="d-flex justify-content-between"><span>{i + 1}.-{b.name}</span><Button variant="danger"
 
                             onClick={() => {
-                                fetch(`${SERVER_BASE_URL}/categories/delete/${b.id}`, {
+                                fetch(`${SERVER_BASE_URL}/categories/${b.id}`, {
                                     method: "DELETE"
                                 })
                                     .then(response => {

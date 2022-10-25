@@ -13,6 +13,9 @@ const ActivitiesPanel = () => {
     const [activities, setActivities] = useState(null)
     const [activityData, setActivityData] = useState({})
 
+    const [ activitiesSearch, setActivitiesSearch ] = useState([])
+    const [ search, setSearch ] = useState('')
+
     useEffect(() => {
         async function getData() {
             const data = await publicService.activitiesList()
@@ -54,7 +57,7 @@ const ActivitiesPanel = () => {
     
                 await customFetch(url, properties)
                 
-                //if deleted, refresh news
+                //if deleted, refresh activities
                 handleRefresh()
                 setActivityData({})
             } catch (error) {
@@ -68,6 +71,29 @@ const ActivitiesPanel = () => {
         setActivities(data.data.reverse())
     }
 
+    const searchActivities = (e) => {
+        setSearch(e.target.value)
+        setActivitiesSearch(activities.filter(activity => activity.name.toLowerCase().includes(e.target.value)))
+    }
+
+    const Item = ({ currentActivity }) => {
+        return (
+            <div className={s.listItemContainer}>
+                <li className={s.listItem}>
+                    <div className={s.imageContainer}>
+                        <img src={currentActivity.image} alt={currentActivity.name} className={s.image}/>
+                    </div>
+                    
+                    <div className={s.dataContainer}>
+                        <h5>{currentActivity.name}</h5>  
+                        <button onClick={() => handleUpdate(currentActivity)} className={s.button}>Modificar</button>
+                        <button onClick={() => handleDelete(currentActivity)} className={s.button}>Eliminar</button>
+                    </div>
+                </li>
+            </div>
+        )
+    }
+
   return (
     <div className={s.activitiesPanelContainer}>
 
@@ -78,29 +104,24 @@ const ActivitiesPanel = () => {
             <div className={s.buttonsContainer}>
                 <button onClick={()=> handleCreate()} className={s.button}>Crear Actividad</button>
                 <button onClick={()=> handleRefresh()} className={s.button}>Refresh</button>
+                <input onChange={searchActivities} className={s.search} placeholder='Buscar actividad...' />
             </div>
             <div className={s.activitiesListContainer}>
-                <ul className={s.activitiesList}>
-                    {!activities ? 
-                        <Loader/> 
+            <ul className={s.activitiesList}>
+                    {!activities ?
+                        <Loader />
                     :
-                        activities.length > 0 ? 
-                            activities.map(activity => (
-                                <div key={activity.id} className={s.listItemContainer}>
-                                    <li className={s.listItem}>
-                                        <div className={s.imageContainer}>
-                                            <img src={activity.image} alt={activity.name} className={s.image}/>
-                                        </div>
-                                        <div className={s.dataContainer}>
-                                            <h5 className={s.activitiesName}> {activity.name} </h5>  
-                                            <button onClick={() => handleUpdate(activity)} className={s.button}>Modificar</button>
-                                            <button onClick={() => handleDelete(activity)} className={s.button}>Eliminar</button>
-                                        </div>
-                                    </li>
-                                </div>
-                            ))
+                        search ? 
+                            activitiesSearch.length > 0 ?
+                                activitiesSearch.map((currentActivity) => <Item key={currentActivity.id} currentActivity={currentActivity} />)
+                            :
+                                <p className='text-center'>No se encontraron novedades</p>
+                            
                         :
-                        <p className='text-center'>No se encontraron actividades</p>
+                            activities.length > 0 ? 
+                                activities.map((currentActivity) => <Item key={currentActivity.id} currentActivity={currentActivity} />)
+                            :
+                                <p className='text-center'>No se encontraron novedades</p>
                     }
                 </ul>
             </div>

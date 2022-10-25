@@ -2,7 +2,7 @@ import React from "react"
 import {useSelector} from 'react-redux'
 import {Link, useLocation, useNavigate } from 'react-router-dom';
 
-import { PersonLinesFill, Newspaper, JournalText, BookmarkStar, ChatLeftHeart, Easel2, PersonCircle, Building, People, Envelope } from 'react-bootstrap-icons';
+import { PersonLinesFill ,Newspaper, JournalText, BookmarkStar, ChatLeftHeart, Easel2, PersonCircle, Building, People, Envelope } from 'react-bootstrap-icons';
 import { useDispatch } from 'react-redux'
 import { logout } from '../../../reducers/userReducer'
 
@@ -27,15 +27,20 @@ const Sidebar = ()=> {
 
     return (
 
-        <div className="sidebarContainer d-flex flex-column min-vh-100 position-sticky top-0" >
+        <div className="sidebarContainer d-flex flex-column justify-content-between min-vh-100 position-sticky top-0" >
             <a href="/" className="d-flex align-items-center justify-content-center text-decoration-none">
                 <img src="/images/web/LOGO-SOMOS MAS.png" className="sidebarLogo" alt="logo"></img>
             </a>
-            <hr></hr>
+            <hr className="m-0"></hr>
             <ul className="nav nav-pills flex-column">
-                <li className="sidebarItem" >
+                <li className={`sidebarItem ${userState.roleId != 1 ? '' : 'd-none'}`}>
                     <Link to="editProfile" className={`sidebarButton user-select-none ${location.pathname === '/backOffice/editProfile' ? 'sidebarButtonSelected' : ''}`}>
                         <PersonLinesFill className="sidebarIcon"/><span className="sidebarText">Editar Perfil</span>
+                    </Link>
+                </li>
+                <li className={`sidebarItem ${userState.roleId != 1 ? '' : 'd-none'}`}>
+                    <Link to="addTestimonial" className={`sidebarButton user-select-none ${location.pathname === '/backOffice/news' ? 'sidebarButtonSelected' : ''}`}>
+                        <ChatLeftHeart className="sidebarIcon"/><span className="sidebarText">Añadir Testimonio</span>
                     </Link>
                 </li>
                 <li className={`sidebarItem ${userState.roleId === 1 ? '' : 'd-none'}`}>
@@ -86,7 +91,7 @@ const Sidebar = ()=> {
 
                 
             </ul>
-            <hr></hr>
+            <hr className="m-0"></hr>
             <div>
                 <button className="sidebarLogoutButton" onClick={signOff} >Cerrar Sesion</button>
             </div>

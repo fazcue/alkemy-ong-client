@@ -13,6 +13,9 @@ const NewsPanel = () => {
     const [news, setNews] = useState(null)
     const [newsData, setNewsData] = useState({})
 
+    const [ newsSearch, setNewsSearch ] = useState([])
+    const [ search, setSearch ] = useState('')
+
     useEffect(() => {
         async function getData() {
             const data = await publicService.newsList()
@@ -67,6 +70,29 @@ const NewsPanel = () => {
         setNews(data.data.reverse())
     }
 
+    const searchNews = (e) => {
+        setSearch(e.target.value)
+        setNewsSearch(news.filter(news => news.name.toLowerCase().includes(e.target.value)))
+    }
+
+    const Item = ({ currentNews }) => {
+        return (
+            <div className={s.listItemContainer}>
+                <li className={s.listItem}>
+                    <div className={s.imageContainer}>
+                        <img src={currentNews.image} alt={currentNews.name} className={s.image}/>
+                    </div>
+                    
+                    <div className={s.dataContainer}>
+                        <h5>{currentNews.name}</h5>  
+                        <button onClick={() => handleUpdate(currentNews)} className={s.button}>Modificar</button>
+                        <button onClick={() => handleDelete(currentNews)} className={s.button}>Eliminar</button>
+                    </div>
+                </li>
+            </div>
+        )
+    }
+
   return (
     <div className={s.newsPanelContainer}>
 
@@ -77,30 +103,25 @@ const NewsPanel = () => {
             <div className={s.buttonsContainer}>
                 <button onClick={()=> handleCreate()} className={s.button}>Crear Novedad</button>
                 <button onClick={()=> handleRefresh()} className={s.button}>Refresh</button>
+                <input onChange={searchNews} className={s.search} placeholder='Buscar novedad...' />
             </div>
+
             <div className={s.newsListContainer}>
                 <ul className={s.newsList}>
                     {!news ?
                         <Loader />
                     :
-                        news.length > 0 ? 
-                            news.map((currentNews) => (
-                                <div key={currentNews.id} className={s.listItemContainer}>
-                                    <li className={s.listItem}>
-                                        <div className={s.imageContainer}>
-                                            <img src={currentNews.image} alt={currentNews.name} className={s.image}/>
-                                        </div>
-                                        
-                                        <div className={s.dataContainer}>
-                                            <h5 className={s.newsName}> {currentNews.name} </h5>  
-                                            <button onClick={() => handleUpdate(currentNews)} className={s.button}>Modificar</button>
-                                            <button onClick={() => handleDelete(currentNews)} className={s.button}>Eliminar</button>
-                                        </div>
-                                    </li>
-                                </div>
-                            ))
+                        search ? 
+                            newsSearch.length > 0 ?
+                                newsSearch.map((currentNews) => <Item key={currentNews.id} currentNews={currentNews} />)
+                            :
+                                <p className='text-center'>No se encontraron novedades</p>
+                            
                         :
-                        <p className='text-center'>No se encontraron novedades</p>
+                            news.length > 0 ? 
+                                news.map((currentNews) => <Item key={currentNews.id} currentNews={currentNews} />)
+                            :
+                                <p className='text-center'>No se encontraron novedades</p>
                     }
                 </ul>
             </div>
