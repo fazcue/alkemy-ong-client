@@ -5,6 +5,7 @@ import s from './styles/ActivitiesPanel.module.css'
 import { alertError, alertWarning } from '../../../services/Alert'
 
 import ActivitiesForm from '../../BackOffice/activityForm/ActivityForm'
+import Loader from '../../Loader/Loader'
 
 const SERVER_BASE_URL = process.env.REACT_APP_SERVER_BASE_URL
 
@@ -81,7 +82,9 @@ const ActivitiesPanel = () => {
             <div className={s.activitiesListContainer}>
                 <ul className={s.activitiesList}>
                     {
-                        activities.length && activities.map(activity => (
+                        !activities.length ? 
+                        <Loader/>
+                        : activities.map(activity => (
                             <div key={activity.id} className={s.listItemContainer}>
                                 <li className={s.listItem}>
                                     <div className={s.imageContainer}>

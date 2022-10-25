@@ -5,6 +5,7 @@ import s from './styles/NewsPanel.module.css'
 import { alertError, alertWarning } from '../../../services/Alert'
 
 import NewsForm from '../newsForm/NewsForm'
+import Loader from '../../Loader/Loader'
 
 const SERVER_BASE_URL = process.env.REACT_APP_SERVER_BASE_URL
 
@@ -80,7 +81,9 @@ const NewsPanel = () => {
             <div className={s.newsListContainer}>
                 <ul className={s.newsList}>
                     {
-                        news.length && news.map((currentNews) => (
+                        !news.length ? 
+                        <Loader /> 
+                        : news.map((currentNews) => (
                             <div key={currentNews.id} className={s.listItemContainer}>
                                 <li className={s.listItem}>
                                     <div className={s.imageContainer}>
@@ -94,7 +97,7 @@ const NewsPanel = () => {
                                     </div>
                                 </li>
                             </div>
-                        ))
+                        ))  
                     }
                 </ul>
             </div>

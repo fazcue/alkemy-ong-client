@@ -9,11 +9,7 @@
   .columnLeftContainer {
     width: 40%;
   }
-  
-  .titleContainer {
-  
-  }
-  
+
   .activitiesListContainer {
     text-align: initial;
     margin: 12px;
@@ -48,7 +44,7 @@
     position: sticky;
     top: 0;
     background-color: #fff;
-    padding-top: 20px;
+    padding-top: 16px;
     padding-bottom: 0.5rem;
   }
   
@@ -83,11 +79,7 @@
     padding: 0px 0px 0px 8px;
   
   }
-  
-  .activitiesName {
-  
-  }
-  
+
   .activitiesContent {
     word-break: break-all;
   }
@@ -118,8 +110,6 @@
     grid-column-gap: 3rem;
     column-gap: 2rem;
     padding: 0.9rem 1rem 1rem;
-    position: sticky;
-    top: 6rem;
     background-color: #fff;
   }
   
