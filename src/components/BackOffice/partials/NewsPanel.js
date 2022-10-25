@@ -68,6 +68,8 @@ const NewsPanel = () => {
     const handleRefresh = async () => {
         const data = await publicService.newsList()
         setNews(data.data.reverse())
+        setSearch('')
+        setNewsSearch([])
     }
 
     const searchNews = (e) => {
@@ -103,7 +105,7 @@ const NewsPanel = () => {
             <div className={s.buttonsContainer}>
                 <button onClick={()=> handleCreate()} className={s.button}>Crear Novedad</button>
                 <button onClick={()=> handleRefresh()} className={s.button}>Refresh</button>
-                <input onChange={searchNews} className={s.search} placeholder='Buscar novedad...' />
+                <input onChange={searchNews} value={search} className={s.search} placeholder='Buscar novedad...' />
             </div>
 
             <div className={s.newsListContainer}>

@@ -69,6 +69,8 @@ const ActivitiesPanel = () => {
     const handleRefresh = async () => {
         const data = await publicService.activitiesList()
         setActivities(data.data.reverse())
+        setSearch('')
+        setActivitiesSearch([])
     }
 
     const searchActivities = (e) => {
@@ -104,7 +106,7 @@ const ActivitiesPanel = () => {
             <div className={s.buttonsContainer}>
                 <button onClick={()=> handleCreate()} className={s.button}>Crear Actividad</button>
                 <button onClick={()=> handleRefresh()} className={s.button}>Refresh</button>
-                <input onChange={searchActivities} className={s.search} placeholder='Buscar actividad...' />
+                <input onChange={searchActivities} value={search} className={s.search} placeholder='Buscar actividad...' />
             </div>
             <div className={s.activitiesListContainer}>
             <ul className={s.activitiesList}>
