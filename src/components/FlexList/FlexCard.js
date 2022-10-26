@@ -15,7 +15,7 @@ const FlexCard = ({ item, section }) => {
             </Link>
 
             <Card.Body className={styles.body}>
-                <h2>
+                <h2 className='text-center'>
                     <Link to={`/${section}/${id}`} className={styles.title}>{name}</Link>
                 </h2>
                 <CustomButton href={`/${section}/${id}`} text='Ver detalle' />
