@@ -6,10 +6,6 @@ import { PersonLinesFill ,Newspaper, JournalText, BookmarkStar, ChatLeftHeart, E
 import { useDispatch } from 'react-redux'
 import { logout } from '../../../reducers/userReducer'
 
-
-let adminLabel = 1
-
-
 const Sidebar = ()=> {
 
     let location = useLocation();
@@ -33,12 +29,12 @@ const Sidebar = ()=> {
             </a>
             <hr className="m-0"></hr>
             <ul className="nav nav-pills flex-column">
-                <li className={`sidebarItem ${userState.roleId != 1 ? '' : 'd-none'}`}>
+                <li className={`sidebarItem ${userState.roleId !== 1 ? '' : 'd-none'}`}>
                     <Link to="editProfile" className={`sidebarButton user-select-none ${location.pathname === '/backOffice/editProfile' ? 'sidebarButtonSelected' : ''}`}>
                         <PersonLinesFill className="sidebarIcon"/><span className="sidebarText">Editar Perfil</span>
                     </Link>
                 </li>
-                <li className={`sidebarItem ${userState.roleId != 1 ? '' : 'd-none'}`}>
+                <li className={`sidebarItem ${userState.roleId !== 1 ? '' : 'd-none'}`}>
                     <Link to="addTestimonial" className={`sidebarButton user-select-none ${location.pathname === '/backOffice/news' ? 'sidebarButtonSelected' : ''}`}>
                         <ChatLeftHeart className="sidebarIcon"/><span className="sidebarText">Añadir Testimonio</span>
                     </Link>

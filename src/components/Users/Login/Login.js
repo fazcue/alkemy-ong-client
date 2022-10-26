@@ -21,7 +21,7 @@ const LoginForm = () => {
   const dispatch = useDispatch()
 
     const loginSchema = Yup.object().shape({
-            email: Yup.string().required("Debe ingresar un email").matches(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/, {message: "El email es invalido"})
+            email: Yup.string().required("Debe ingresar un email").matches(/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/, {message: "El email es invalido"})
             .test('checkEmail', 'Este email no esta registrado', async (value) =>{
                 let email = value ? value : ''
                 let response = await authService.checkEmail({email})
@@ -75,14 +75,13 @@ const LoginForm = () => {
                 const token = res.data.token
                 localStorage.setItem('token', JSON.stringify(token));
                 const userData = await getUserData()
-
                 const user = {
                     id: userData.id,
                     firstName: userData.firstName,
                     lastName: userData.lastName,
                     email: userData.email,
                     image: userData.image,
-                    role: userData.roleId,
+                    roleId: userData.roleId,
                     token: token
                 }
 

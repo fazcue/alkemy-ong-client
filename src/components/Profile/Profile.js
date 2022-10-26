@@ -72,12 +72,13 @@ const Profile = () => {
 
 const MyProfile = ({ handleDelete }) => {
     const userData = useSelector(store => store.user)
+    console.log(userData.image)
     return (
         <>
         <div className='profile-container'>
         <h1>Mi perfil</h1>
         <div className='profile-image-container'>
-            <img src='/images/default-user.jpg' alt='/images/default-user.jpg' />
+            <img src={userData.image} alt={userData.image} />
         </div>
         <h3>Nombre:<span className='span-profile'>{userData.firstName}</span></h3>
         <h3>Apellido:<span className='span-profile'>{userData.lastName}</span></h3>

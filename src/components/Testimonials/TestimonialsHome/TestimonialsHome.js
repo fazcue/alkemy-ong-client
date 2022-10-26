@@ -42,7 +42,7 @@ const TestimonialsHome = () => {
         <>
             <h1>Testimonios</h1>
             <div className="d-flex justify-content-end">
-                <Link to="/backOffice/addTestimonial"><div className="btn btn-primary">Agregar mi testimonio</div></Link>
+                <Link to="/backOffice/addTestimonial"><div className="py-2 my-3 me-3 btn btn-primary">Agregar mi testimonio</div></Link>
 
             </div>
             {testimonials.length === 0 ?
@@ -51,7 +51,7 @@ const TestimonialsHome = () => {
                 <div className={s.testimonialsCardContainer}>
                     {
                         testimonials.map(t => {
-                            return ( <TestimonialsCard img={t.image} title={t.name} content={t.content} /> )
+                            return ( <TestimonialsCard img={t.image} title={t.name} content={t.content} key={t.id} /> )
                         })
                     }
                 </div>

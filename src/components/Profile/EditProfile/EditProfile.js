@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { login } from '../../../reducers/userReducer'
 import { Navigate, useNavigate } from 'react-router-dom'
@@ -7,8 +7,9 @@ import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import { BASE_PATH } from '../../../utils/constants'
 import { customFetch } from '../../../services/fetch'
-import { ToastContainer, toast } from "react-toastify"
+import { ToastContainer } from "react-toastify"
 import 'react-toastify/dist/ReactToastify.css';
+import { alertWaiting, alertConfirmation, alertError } from '../../../services/Alert'
 
 const EditProfile = () => {
 
@@ -24,7 +25,8 @@ const EditProfile = () => {
     }
 
 const Profile = () => {
-
+  const [file, setFile] = useState('')
+  const [ fileName, setFileName ] = useState('Selecciona una imagen')
   const userData = useSelector(store => store.user)
   const dispatch = useDispatch()
   const navigate = useNavigate()
@@ -39,20 +41,29 @@ const Profile = () => {
     }
   }
 
-  const handleSubmit = (formData) => {
+  const uploadHandler = (event) => {
+    const fileData = event.target.files[0]
+    setFile(fileData)
+    setFileName(fileData.name)
+  }
+
+  const handleSubmit = (formData) => { 
     const url = `${BASE_PATH}/users/${userData.id}`
     const properties = {
       method: 'put',
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      },
       data: {
         firstName: formData.firstName,
         lastName: formData.lastName,
         email: formData.email,
-        image: formData.image,
+        image: file,
         password: formData.password,
         newPassword: formData.newPassword,
       }
     }
-
+    alertWaiting('Modificando su usuario', 'aguarde un momento')
     customFetch(url, properties)
       .then(data => {
         const token = data.data.token
@@ -68,28 +79,11 @@ const Profile = () => {
          
         }
         dispatch(login(updatedUser))
-        navigate('/')
-        toast.success('Se modificaron los datos de usuario', {
-          position: "top-right",
-          autoClose: 1000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-        })
+        navigate(`/usuario/${userData.id}`)
+        alertConfirmation('Enhorabuena', 'su perfil ha sido modificado')
       })
       .catch(error => {
-        console.log(error.response.data.errors)
-        toast.error( error.response.data.errors , {
-          position: "top-right",
-          autoClose: 1500,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-      })
+        alertError('Hubo un error', error.response.data.errors )
       })
   }
 
@@ -110,10 +104,12 @@ const Profile = () => {
           <div className='profile-container'>
         <h1>Mi perfil</h1>
         <div className='profile-image-container'>
-            <img src='/images/default-user.jpg' alt='/images/default-user.jpg' />
+            <img src={userData.image} alt={userData.image} />
         </div>
-        <form onSubmit={formik.handleSubmit}>
-            <button className='delete-btn'>Cambiar Imagen</button>
+        <form onSubmit={formik.handleSubmit} autoComplete="off">
+                    <label htmlFor='profileImage' className='profile-image-button'>{fileName}</label>
+                    <input name='image' id='profileImage' type='file' accept='image/*'  onChange={uploadHandler}/>
+          <div className='profile-input-container'>
             <h3>Nombre:</h3>  
             <input 
               className='edit-profile-input' 
@@ -123,6 +119,9 @@ const Profile = () => {
               onChange={formik.handleChange}
               placeholder={userData.firstName} 
             />
+            {formik.errors.firstName && <p className='profile-errors'>{formik.errors.firstName}</p>}
+          </div>
+          <div className='profile-input-container'>
             <h3>Apellido:</h3>  
             <input 
               className='edit-profile-input' 
@@ -132,6 +131,9 @@ const Profile = () => {
               onChange={formik.handleChange}
               placeholder={userData.lastName} 
               />
+            {formik.errors.lastName && <p className='profile-errors'>{formik.errors.lastName}</p>}
+          </div>
+          <div className='profile-input-container'>
             <h3>Email:</h3>  
             <input 
               className='edit-profile-input' 
@@ -141,6 +143,9 @@ const Profile = () => {
               onChange={formik.handleChange}
               placeholder={userData.email} 
             />
+            {formik.errors.email && <p className='profile-errors'>{formik.errors.email}</p>}
+          </div>
+          <div className='profile-input-container'>
             <h3>Cambiar contraseña:</h3>  
             <h5>Ingrese contraseña actual</h5>
             <input 
@@ -148,18 +153,23 @@ const Profile = () => {
               type='password' 
               name="password" 
               id="password" 
+              autoComplete="new-password"
               onChange={formik.handleChange}
               placeholder='*****' 
             />
+            {formik.errors.password && <p className='profile-errors'>{formik.errors.password}</p>}
             <h5>Ingrese contraseña nueva</h5>
             <input 
               className='edit-profile-input' 
               type='password' 
               name="newPassword" 
               id="newPassword" 
+              autoComplete='new-password'
               onChange={formik.handleChange}
               placeholder='*****' 
             />
+          </div>  
+            {formik.errors.newPassword && <p className='profile-errors'>{formik.errors.newPassword}</p>}
           <div className='profile-btn-cont'>
             <button type='submit' className='edit-btn'>Guardar Perfil</button>
           </div>
