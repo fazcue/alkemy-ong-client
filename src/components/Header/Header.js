@@ -35,16 +35,25 @@ export default function Header() {
         </nav>
         <div className='account'>
           {userData.id ?
-            <div>
-              <Link to={`/usuario/${userData.id}`}><button className='login'>{userData.firstName}</button></Link>
+              <>
+              <Link to={`/usuario/${userData.id}`} style={{ textDecoration: 'none' }}>
+                <div className='login login-flex'>
+                  <div className='account-button-image'>
+                    <img src={userData.image} alt={userData.firstName}/>
+                  </div>
+                  <div className='account-button-text'>
+                    <p>{userData.firstName}</p>
+                  </div>   
+                </div>
+              </Link>
               {userData.roleId === 1 && <Link to='backOffice'><button className='login'><Sliders/></button></Link>}
               <button className='register' onClick={handleLogout}>Cerrar Sesion</button>
-            </div>
+              </>
           :
-            <div>
+            <>
               <Link to='Login'><button className='login'>Log in</button></Link>
               <Link to='Registrarse'><button className='register'>Registrate</button></Link>
-            </div>
+            </>
           }
         </div>
         <BurguerIcon userData={userData} handleLogout={handleLogout}/>

@@ -88,7 +88,7 @@ const Profile = () => {
       })
   }
 
-  const handleCancel = (formData) => {
+  const handleCancel = () => {
     Swal.fire({
       title: 'Deseas dejar de editar?',
       icon: 'info',
