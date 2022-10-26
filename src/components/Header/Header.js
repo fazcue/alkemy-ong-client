@@ -36,7 +36,7 @@ export default function Header() {
         <div className='account'>
           {userData.id ?
               <>
-              <Link to={`/usuario/${userData.id}`} style={{ textDecoration: 'none' }}>
+              <Link to='backOffice' style={{ textDecoration: 'none' }}>
                 <div className='login login-flex'>
                   <div className='account-button-image'>
                     <img src={userData.image} alt={userData.firstName}/>
@@ -46,7 +46,6 @@ export default function Header() {
                   </div>   
                 </div>
               </Link>
-              {userData.roleId === 1 && <Link to='backOffice'><button className='login'><Sliders/></button></Link>}
               <button className='register' onClick={handleLogout}>Cerrar Sesion</button>
               </>
           :

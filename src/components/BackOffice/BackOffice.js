@@ -7,6 +7,7 @@ import Offcanvas from 'react-bootstrap/Offcanvas';
 import Button from 'react-bootstrap/Button';
 import SideBar from './partials/SideBar'
 import EditProfilePanel from './partials/EditProfilePanel'
+import ProfilePanel from './partials/ProfilePanel'
 import AddTestimonialPanel from './partials/AddTestimonialPanel'
 import NewsPanel from './partials/NewsPanel'
 import ActivitiesPanel from './partials/ActivitiesPanel'
@@ -42,7 +43,8 @@ const BackOffice = () => {
 
             </div>
             <Routes>
-                <Route path="/editProfile" element={<EditProfilePanel />} />
+                <Route path="/usuario/:id" element={<ProfilePanel />} />
+                <Route path="/usuario/editar/:id" element={<EditProfilePanel />} />
                 <Route path="/addTestimonial" element={<AddTestimonialPanel />} />
                 <Route element={<AdminRouteGuard />}>
                     <Route path="/news" element={<NewsPanel />} />

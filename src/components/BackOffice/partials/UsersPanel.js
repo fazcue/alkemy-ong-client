@@ -39,7 +39,7 @@ const UsersPanel = () => {
                             <div key={e.id} className={recycledStyles.listItemContainer}>
                                 <li className={s.listItem}>
                                     <div className={recycledStyles.imageContainer}>
-                                        <img className={recycledStyles.image} src={`images/${e.image}`} alt="Image" />
+                                        <img className={recycledStyles.image} src={e.image} alt="Image" />
                                     </div>
                                     <div className={recycledStyles.dataContainer}>
                                         <h4 className={recycledStyles.newsName}> {e.firstName} {e.lastName} </h4>
