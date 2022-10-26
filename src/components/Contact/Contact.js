@@ -1,184 +1,81 @@
-import React, { useState, useEffect } from "react";
-import { Formik, Form, Field } from "formik";
-import * as yup from "yup";
-import { alertConfirmation, alertError } from "../../services/Alert";
-import axios from "axios";
-import "./Contact.css";
-import Loader from "../Loader/Loader"
-import { customFetch } from '../../services/fetch'
-import { ToastContainer, toast } from "react-toastify"
-import 'react-toastify/dist/ReactToastify.css';
-import { BASE_PATH } from "../../utils/constants"
+import React, { useState, useEffect } from 'react'
+import ContactForm from './ContactForm'
+import styles from './Contact.module.css'
+import parse from 'html-react-parser'
 
-//const SERVER_BASE_URL = process.env.REACT_APP_SERVER_BASE_URL
+//Social Icons
+import { Facebook, Instagram, Twitter } from 'react-bootstrap-icons'
 
-const FormCont = () => {
+const SERVER_BASE_URL = process.env.REACT_APP_SERVER_BASE_URL
 
-  const [members, setMembers] = useState([])
+const Contact = () => {
+	const [socialLinks, setSocialLinks] = useState([])
 
-  const [loader, setLoader] = useState(false)
+	const text = [
+		'<p>En <strong>SOMOS MÁS</strong> necesitamos el apoyo de todos.</p>',
+		'<p>Si deseas <em>ser voluntario</em>, <em>realizar aportes</em>, o recibir mayor información sobre <strong>nuestro trabajo</strong>, puedes contactarnos mediante el siguiente formulario.<p>',
+		'<p>O bien puedes hacerlo a través de</p>'
+	]
 
-  const url = `${BASE_PATH}/members`
+	const thanksMessage = '<p>Desde ya, muchas gracias por ayudarnos ❤️</p>'
 
-  const properties = {
-    method: 'get'
-  }
+	useEffect(() => {
+        fetch(`${SERVER_BASE_URL}/organizations/1/public`)
+            .then(response => response.json())
+            .then(data => setSocialLinks(data.socialLinks))
+    }, [])
 
-  useEffect(() => {
-    setLoader(true)
-    customFetch(url, properties)
-      .then(members => {
-        if(!members) {
-          toast.error( 'La base de datos no se encuentra disponible actualmente' , {
-            position: "top-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-        });
-        return
+	//Social media icon
+    //Add more if needed (first import it from 'react-bootstrap-icons')
+    const SocialIcon = ({ socialName, size }) => {
+        switch (socialName) {
+            case 'Facebook':
+                return <Facebook size={size} className={styles.icon} />
+            case 'Instagram':
+                return <Instagram size={size} className={styles.icon} />
+            case 'Twitter':
+                return <Twitter size={size} className={styles.icon} />
+            default:
+                return null
         }
-        setMembers(members.data)
-        setLoader(false)
-      })
-        .catch(error => console.log(error))
-  }, [])
-
-
-  //Formik and yup
-  const vDataContac = yup.object().shape({
-    name: yup.string().required("Requerido"),
-    email: yup.string().email("Formato Email inválido").required("Requerido"),
-    phone: yup.number().required("Requerido"),
-    message: yup
-      .string()
-      .min(2)
-      .max(250, "250 caracteres permitidos")
-      .required("Requerido"),
-  });
-
-  const handleSubmit = async (values, { resetForm }) => {
-    const url = `${BASE_PATH}/contacts`
-    const properties = {
-      method: 'post',
-      data: values
     }
-    try {
-      await axios(url, properties)
-      
-      const alertTitle = 'Consulta Enviada'
-      const alertMessage = 'Su consulta fue enviada correctamente'
-      
-      resetForm()
-      alertConfirmation(alertTitle, alertMessage)
-    } catch (error) {
-      alertError('Ups, hubo un error', error)
+
+    const SocialLinks = () => {
+        return (
+            <div>
+                <h3>Nuestras redes</h3>
+                {socialLinks.length > 0 && (
+                    <ul>
+                        {socialLinks.map((social, index) => {
+                            return (
+                                <li key={`social-${index}`}>
+                                    <a href={social.url} target="_blank" rel="noopener noreferrer">
+                                        <SocialIcon socialName={social.name} size={36} />
+                                        {' '}{social.name}
+                                    </a>
+                                </li>
+                            )
+                        })}
+                    </ul>
+                )}
+            </div>
+        )
     }
-  }
 
-  return (
-    <>
-       
-      <h1>¡Contáctate con Nosotros!</h1>
-      <div className="formCont" >
-        <div className="divCenter">
-          <div className="row">
-          <div className= 'col-sm-6'>
-            <h2 className="text">
-              Contáctate con nostros por este medio para mas información, para
-              ser voluntario o para aportes de colaboración.
-            </h2>
-          </div>      
-          <div className= 'containerForm col-sm-6 pb-4'>
-            <Formik
-              initialValues={{ name: "", email: "",phone:"", message: "" }}
-              validationSchema={vDataContac}
-              // onSubmit={async (values) => {
-              //   await new Promise((resolve) => setTimeout(resolve, 500));
-              //   alert(JSON.stringify(values, null, 2));
-              // }}
-              onSubmit={handleSubmit}
-            >
-              {({ errors, touched }) => (
-                <Form>
-                  <div>
-                    <Field
-                      className="input"
-                      name="name"
-                      placeholder="Nombre y  Apellido"
-                    />
-                    {errors.name && touched.name ? (
-                      <div className="requerido">{errors.name}</div>
-                    ) : null}
-                  </div>
-                  <div>
-                    <Field className="input" name="email" placeholder="Email" />
-                    {errors.email && touched.email ? (
-                      <div className="requerido">{errors.email}</div>
-                    ) : null}
-                  </div>
-                  <div>
-                    <Field className="input" name="phone" placeholder="Telefono" />
-                    {errors.phone && touched.phone ? (
-                      <div className="requerido">{errors.phone}</div>
-                    ) : null}
-                  </div>
-                  <div>
-                    <Field
-                      as="textarea"
-                      className="textarea"
-                      rows="10"
-                      cols="50"
-                      name="message"
-                      placeholder="Escriba su consulta"
-                    />
-                    {errors.message && touched.message ? (
-                      <div className="requerido">{errors.message}</div>
-                    ) : null}
-                  </div>
-
-                  <Field
-                    className="btnAzul px-2"
-                    type="submit"
-                    name="submit"
-                    value="Enviar Consulta"
-                  />
-                </Form>
-              )}
-            </Formik>
-          </div>
-          </div>
-        </div>
-      </div>
-          <h2>Miembros Fundadores</h2>
-          {loader && <Loader />}
-          <div className='members-grid'>
-            {members.map(member => member.id < 3 ? <MembersCard key={member.name} id={member.id} image={member.image} name={member.name}/> : null)}
-          </div>
-          <h2>Otros Miembros</h2>
-          {loader && <Loader />}
-          <div className= 'other-members-grid'>
-            {members.map(member => member.id > 2 ? <MembersCard key={member.name} id={member.id} image={member.image} name={member.name}/> : null)}
-          </div>
-
-      <ToastContainer />             
-    </>
-  );
-};
-
-
-const MembersCard = ({ id, image, name }) => {
-  return(
-    <div className='members-card'>
-    <div className='members-image'>
-      <img src={image} alt={name}></img>
-    </div>
-    <h5 className='members-text'>{name}</h5>
-    </div>
-  )
+	return (
+		<div className={styles.container}>
+			<h1>Contáctate con Nosotros</h1>
+			<div className={styles.row}>
+				<div className={styles.column}>
+					{text.map(text => parse(text))}
+					<SocialLinks />
+					{parse(thanksMessage)}
+				</div>
+				<h3 className={styles.formText}>Formulario de contacto</h3>
+				<ContactForm />
+			</div>
+		</div>
+	)
 }
 
-
-export default FormCont;
+export default Contact

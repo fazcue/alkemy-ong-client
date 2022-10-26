@@ -51,8 +51,6 @@ const Footer = () => {
             .then(data => setSocialLinks(data.socialLinks))
     }, []);
 
-    console.log(socialLinks)
-
     const Logo = () => {
         return (
             <div className={`${styles.box} ${styles.logoContainer}`}>
