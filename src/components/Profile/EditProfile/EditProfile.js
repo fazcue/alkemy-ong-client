@@ -10,6 +10,7 @@ import { customFetch } from '../../../services/fetch'
 import { ToastContainer } from "react-toastify"
 import 'react-toastify/dist/ReactToastify.css';
 import { alertWaiting, alertConfirmation, alertError } from '../../../services/Alert'
+import Swal from 'sweetalert2'
 
 const EditProfile = () => {
 
@@ -85,6 +86,22 @@ const Profile = () => {
       .catch(error => {
         alertError('Hubo un error', error.response.data.errors )
       })
+  }
+
+  const handleCancel = (formData) => {
+    Swal.fire({
+      title: 'Deseas dejar de editar?',
+      icon: 'info',
+      text: 'No se guardaran los cambios realizados',
+      showDenyButton:true,
+      confirmButtonText: 'Si',
+      confirmButtonColor: '#9ac9fb',
+      denyButtonText: 'no'
+    }).then(result => {
+      if(result.isConfirmed){
+        navigate(`/usuario/${userData.id}`)
+      }
+    })
   }
 
   const formik = useFormik({
@@ -172,6 +189,7 @@ const Profile = () => {
             {formik.errors.newPassword && <p className='profile-errors'>{formik.errors.newPassword}</p>}
           <div className='profile-btn-cont'>
             <button type='submit' className='edit-btn'>Guardar Perfil</button>
+            <button type='button' className='delete-btn' onClick={handleCancel}>Cancelar cambios</button>
           </div>
         </form>
         </div>

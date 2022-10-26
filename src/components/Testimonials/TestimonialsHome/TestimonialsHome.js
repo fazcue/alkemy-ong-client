@@ -33,7 +33,7 @@ const TestimonialsHome = () => {
             <>
                 <h1>Testimonios</h1>
                 <Loader />
-                <p>Cargando...</p>
+                <p className='text-center'>Cargando...</p>
             </>
         )
     }
@@ -46,7 +46,7 @@ const TestimonialsHome = () => {
 
             </div>
             {testimonials.length === 0 ?
-                <p>No se encontraron testimonios.</p>
+                <p className='text-center'>No se encontraron testimonios.</p>
             :
                 <div className={s.testimonialsCardContainer}>
                     {

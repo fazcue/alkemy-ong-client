@@ -3,6 +3,7 @@
    padding:6px; 
    border: 1px solid #9ac9fb;
    font-size: 20px;
+   text-align: center;
 }
 
 .edit-profile-input::placeholder {

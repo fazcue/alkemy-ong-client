@@ -15,7 +15,7 @@ const AboutUs= () =>{
 <h1>¡Quiénes Somos!</h1>
 
 <Container className={styles.container} >
-<h2 className={styles.titulo}>AboutUs</h2>
+<h2 className={styles.titulo}>Sobre nosotros</h2>
 
 <div className={styles.texts}>
 <Row>
